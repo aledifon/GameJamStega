@@ -48,8 +48,8 @@ public class TableMovement : MonoBehaviour
         InputPlayer();
         //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z);                
 
-        Debug.Log("Mouse Y = " + yMouse);
-        Debug.Log("Mouse X = " + xMouse);
+        //Debug.Log("Mouse Y = " + yMouse);
+        //Debug.Log("Mouse X = " + xMouse);
 
         ExitCursorLockedMode();
     }
