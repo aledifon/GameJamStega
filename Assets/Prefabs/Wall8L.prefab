@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7761746297509009066}
   - component: {fileID: 7311238530439759137}
   - component: {fileID: 2485184559729290195}
+  - component: {fileID: 4806349169346699588}
   m_Layer: 0
   m_Name: Wall8L
   m_TagString: Untagged
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4806349169346699588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3311803750554514899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d0819057084f44593edaa722ca69b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transparencyLevel: 0.5

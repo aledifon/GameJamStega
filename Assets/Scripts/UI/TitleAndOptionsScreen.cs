@@ -48,12 +48,12 @@ public class TitleAndOptionsScreen : MonoBehaviour, IPointerClickHandler
         {            
             if(textMeshProUGUI.color == firstColor)
             {
-                Debug.Log("Starting going from red to yellow color");
+                //Debug.Log("Starting going from red to yellow color");
                 StartCoroutine(FadeInOut(firstColor, lastColor));
             }                
             else if (textMeshProUGUI.color == lastColor)
             {
-                Debug.Log("Starting going from yellow to red color");
+                //Debug.Log("Starting going from yellow to red color");
                 StartCoroutine(FadeInOut(lastColor, firstColor));
             }
                 
