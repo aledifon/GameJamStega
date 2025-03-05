@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,12 +40,15 @@ public class GameManager : MonoBehaviour
     public static readonly bool isWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
     //public static readonly bool isWebGL = false;     // true = WebGL, false = Windows
 
-    [Header ("UI Controls")]
+    [Header("UI Controls")]
     private GameObject Canvas;
     private GameObject titlePanel;
-    private GameObject menuPanel;    
+    private GameObject menuPanel;
     private GameObject optionsPanel;
     private GameObject pausePanel;
+    private GameObject winPanel;
+    private GameObject loosePanel;
+    private GameObject LevelPassedPanel;
 
     private MenuButton menuPanelStartButton;
     private MenuButton menuPanelOptionsButton;
@@ -57,13 +61,19 @@ public class GameManager : MonoBehaviour
     //[SerializeField] private AudioClip selectFXAudioclip;
 
     [Header("Game Audio")]
-    [SerializeField] private AudioClip gameAudioclip;    
-    [SerializeField] private AudioClip mainTitleAudioclip;        
+    [SerializeField] private AudioClip gameAudioclip;
+    [SerializeField] private AudioClip mainTitleAudioclip;
+    [SerializeField] private AudioClip levelPassedAudioclip;
+    [SerializeField] private AudioClip winAudioclip;
+    [SerializeField] private AudioClip looseAudioclip;
 
     private AudioSource audioSource;
 
     // Pause Flag
-    private bool isPaused = false;
+    public bool IsPaused { get; private set; } = false;
+    public bool IsLevelPassedEnabled { get; private set; } = false;
+    public bool IsWinPanelEnabled { get; private set; } = false;
+    public bool IsLoosePanelEnabled { get; private set; } = false;
 
     #region Enums
     public enum Scenes {Menu, Level1, Level2, Level3}
@@ -130,6 +140,9 @@ public class GameManager : MonoBehaviour
             {
                 case Scenes.Menu:
 
+                    // Set the new Scene as the current one
+                    sceneSelected = Scenes.Menu;
+
                     // Get all the Panel GOs                
                     titlePanel = Canvas.transform.Find("TitlePanel")?.gameObject;
                     if (titlePanel == null)
@@ -159,32 +172,61 @@ public class GameManager : MonoBehaviour
                     // Update the Panel Selected State
                     //panelSelected = PanelSelected.Title;
 
+                    // Unlock the Mouse Cursor
+                    ShowMouseCursor(true);
+
                     break;
                 case Scenes.Level1: 
                 case Scenes.Level2:
                 case Scenes.Level3:
 
-                    // Get the Pause Panel GOs                
+                    // Set the new Scene as the current one
+                    if (SceneManager.GetActiveScene().name == Scenes.Level1.ToString())
+                        sceneSelected = Scenes.Level1;
+                    if (SceneManager.GetActiveScene().name == Scenes.Level2.ToString())
+                        sceneSelected = Scenes.Level2;
+                    if (SceneManager.GetActiveScene().name == Scenes.Level3.ToString())
+                        sceneSelected = Scenes.Level3;
+
+                    // Get the Pause, Win & Loose Panels GOs                
                     pausePanel = Canvas.transform.Find("PausePanel")?.gameObject;
                     if (pausePanel == null)
                         Debug.LogError("The Pause Panel object is null");
+                    winPanel = Canvas.transform.Find("WinPanel")?.gameObject;
+                    if (winPanel == null)
+                        Debug.LogError("The Win Panel object is null");
+                    loosePanel = Canvas.transform.Find("LoosePanel")?.gameObject;
+                    if (loosePanel == null)
+                        Debug.LogError("The Loose Panel object is null");
+                    LevelPassedPanel = Canvas.transform.Find("LevelPassedPanel")?.gameObject;
+                    if (LevelPassedPanel == null)
+                        Debug.LogError("The Level Passed Panel object is null");
 
                     // Start playing Game Audio
                     PlayGameAudioClip();
 
+                    // Disable all the Panels screens
+                    pausePanel.SetActive(false);
+                    SetWinPanel(false);
+                    SetLoosePanel(false);
+                    SetLevelPassedPanel(false);
+
+                    // Lock the Mouse Cursor
+                    ShowMouseCursor(false);
                     break;                    
             }
-        }
+        }        
     }
     private void TooglePause()
     {
-        isPaused = !isPaused;
+        IsPaused = !IsPaused;
 
-        if (isPaused)
+        if (IsPaused)
         {
             Time.timeScale = 0f;                // Stops the game (stop the physics and pending updates which are time dependent)
             audioSource.Pause();
             pausePanel.SetActive(true);
+            ShowMouseCursor(true);
             // Update the Panel Selected State
             //panelSelected = PanelSelected.Pause;
         }
@@ -193,6 +235,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;                // Resumes the game
             audioSource.Play();
             pausePanel.SetActive(false);
+            ShowMouseCursor(false);
             //panelSelected = PanelSelected.Game;     // As the Pause can be launch from any Panel this could be wrong (NEEDED TO UPDATE!)
         }
     }
@@ -207,6 +250,44 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Public Methods
+    // Restart the Game from Level 1
+    public void ReplayGame()
+    {
+        OnStartGameClick();
+    }
+    public void ReturnToMenu()
+    {
+        // Return to the Menu Scene
+        SceneManager.LoadScene(Scenes.Menu.ToString());
+    }
+    public void LoadLevel2()
+    {
+        // Return to the Level2 Scene
+        SceneManager.LoadScene(Scenes.Level2.ToString());
+    }
+    public void LoadLevel3()
+    {
+        // Return to the Level2 Scene
+        SceneManager.LoadScene(Scenes.Level3.ToString());
+    }
+    public void SetLevelPassedPanel(bool enable)
+    {
+        IsLevelPassedEnabled = enable;
+        LevelPassedPanel.SetActive(enable);
+        ShowMouseCursor(enable);
+    }
+    public void SetWinPanel(bool enable)
+    {
+        IsWinPanelEnabled = enable;
+        winPanel.SetActive(enable);
+        ShowMouseCursor(enable);
+    }
+    public void SetLoosePanel(bool enable)
+    {
+        IsLoosePanelEnabled = enable;
+        loosePanel.SetActive(enable);
+        ShowMouseCursor(enable);
+    }
     public void OnQuitGame()
     {
         if (isWebGL)
@@ -230,8 +311,7 @@ public class GameManager : MonoBehaviour
 
         // Update the Panel Selected State
         //panelSelected = PanelSelected.Menu;
-    }
-    
+    }    
     public void OnToOptionsButtonClick()
     {
         // Disable  the Menu Panel & Enable the Options Panel
@@ -254,14 +334,11 @@ public class GameManager : MonoBehaviour
         // Update the Panel Selected State
         //panelSelected = PanelSelected.Menu;
     }
-
     public void OnStartGameClick()
-    {
-        // Set the new Scene as the current one
-        sceneSelected = Scenes.Level1;
+    {        
         // Load the Level 1 Scene
         SceneManager.LoadScene(Scenes.Level1.ToString());
-    }
+    }    
 
     #region AudioMenuMethods
     public void StopAudioSourceClip()
@@ -279,7 +356,47 @@ public class GameManager : MonoBehaviour
         audioSource.volume = 0.5f;
         audioSource.loop = true;
         PlayAudioClip(mainTitleAudioclip);
-    }    
+    }
+    public void PlayLevelPassedAudioClip()
+    {
+        audioSource.volume = 0.7f;
+        audioSource.loop = false;
+        PlayAudioClip(levelPassedAudioclip);
+    }
+    public void PlayWinAudioClip()
+    {
+        audioSource.volume = 0.7f;
+        audioSource.loop = false;
+        PlayAudioClip(winAudioclip);
+    }
+    public void PlayLooseAudioClip()
+    {
+        audioSource.volume = 0.7f;
+        audioSource.loop = false;
+        PlayAudioClip(looseAudioclip);
+    }
     #endregion
+
+    public void ShowMouseCursor(bool enable)
+    {
+        if (enable)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            // Force the updating of the mouse cursor on the next frame
+            //StartCoroutine(nameof(FixCursorVisibility));
+        }
+    }
+    private IEnumerator FixCursorVisibility()
+    {
+        yield return new WaitForSeconds(3f);
+        Cursor.visible = false;
+    }
     #endregion
 }

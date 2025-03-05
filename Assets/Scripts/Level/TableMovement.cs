@@ -38,8 +38,8 @@ public class TableMovement : MonoBehaviour
     }
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class TableMovement : MonoBehaviour
         //Debug.Log("Mouse Y = " + yMouse);
         //Debug.Log("Mouse X = " + xMouse);
 
-        ExitCursorLockedMode();
+        //ExitCursorLockedMode();
     }
     private void FixedUpdate()
     {

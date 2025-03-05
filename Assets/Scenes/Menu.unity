@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 111748219}
-  hoverSound: {fileID: 8300000, guid: e8c43d54f8632394d817a7b2ce096dc2, type: 3}
+  hoverSound: {fileID: 8300000, guid: fa2304732d816d8498a4b3ecf3418287, type: 3}
 --- !u!82 &111748219
 AudioSource:
   m_ObjectHideFlags: 0
@@ -640,19 +640,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 111748222}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1636870521}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnStartGameClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &111748222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2471,6 +2459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameAudioclip: {fileID: 8300000, guid: 9da6bfe916268124fa5b923bdf7858cd, type: 3}
   mainTitleAudioclip: {fileID: 8300000, guid: c0353ae0a1c5bda449bd39eb0ff223ac, type: 3}
+  levelPassedAudioclip: {fileID: 8300000, guid: 61a13b3dab59cee4faeaf60a4998376e, type: 3}
+  winAudioclip: {fileID: 8300000, guid: 0f4f1cb34422f3146ae4f74c299c62ec, type: 3}
+  looseAudioclip: {fileID: 8300000, guid: f7b7ec641f3036841bbe08166153ec5c, type: 3}
 --- !u!82 &1636870522
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2890,7 +2881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2034884502}
-  hoverSound: {fileID: 8300000, guid: e8c43d54f8632394d817a7b2ce096dc2, type: 3}
+  hoverSound: {fileID: 8300000, guid: fa2304732d816d8498a4b3ecf3418287, type: 3}
 --- !u!82 &2034884502
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3045,19 +3036,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2034884505}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1636870521}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnToOptionsButtonClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2034884505
 MonoBehaviour:
   m_ObjectHideFlags: 0

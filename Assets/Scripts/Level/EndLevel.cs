@@ -17,6 +17,8 @@ public class EndLevel : MonoBehaviour
     float newIndicatorScale = 0f;
     float newIndicatorYPos = 0f;
 
+    [SerializeField] Rigidbody ballRb;
+    [SerializeField] Rigidbody levelRb;
 
     void Start()
     {
@@ -31,30 +33,59 @@ public class EndLevel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {
-            // END LEVEL
-
-            // 1. Stop the Table and Ball Movement? or Timescale to 0f?
-            // 2. Show Success/Win Panel for 5s
-            // 3. Load Scene of Next Level
+        {           
+            // Stop the table (Level) and the ball Movement
+            FreezeBallAndLevelMovement();
 
             Debug.Log("Congratulations! You reach the End of the Level!");
 
             if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level1.ToString())
-                SceneManager.LoadScene(GameManager.Scenes.Level2.ToString());   
+            {
+                // Load Level Passed Panel
+                GameManager.Gm.SetLevelPassedPanel(true);
+                // Load LevelPassed Music?
+                GameManager.Gm.PlayLevelPassedAudioClip();
+                // Load Level 2 after elapsed a certain time
+                StartCoroutine(LoadLevel2AfterDelay(2f));
+            }                
             else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level2.ToString())
-                SceneManager.LoadScene(GameManager.Scenes.Level3.ToString());
+            {
+                // Load Level Passed Panel
+                GameManager.Gm.SetLevelPassedPanel(true);
+                // Load LevelPassed Music?
+                GameManager.Gm.PlayLevelPassedAudioClip();
+                // Load Level 3 after elapsed a certain time
+                StartCoroutine(LoadLevel3AfterDelay(2f));
+            }                
             else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level3.ToString())
             {
-                // Load Win Panel + Win Music
-
-                // If pressed "Come back to Title Screen" Button    --> Load Menu Scene
-
-                // If pressed "Try again" Button                    --> Load Level1 Scene
+                // Load Win Panel
+                GameManager.Gm.SetWinPanel(true);
+                // Load Win Music?
+                GameManager.Gm.PlayWinAudioClip();
             }
         }
     }
 
+    private void FreezeBallAndLevelMovement()
+    {
+        ballRb.constraints = RigidbodyConstraints.FreezeAll;
+        levelRb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+    private IEnumerator LoadLevel2AfterDelay(float waitingTime)
+    {
+        yield return new WaitForSeconds(waitingTime);
+
+        //SceneManager.LoadScene(GameManager.Scenes.Level2.ToString());
+        GameManager.Gm.LoadLevel2();
+    }
+    private IEnumerator LoadLevel3AfterDelay(float waitingTime)
+    {
+        yield return new WaitForSeconds(waitingTime);
+
+        //SceneManager.LoadScene(GameManager.Scenes.Level3.ToString());
+        GameManager.Gm.LoadLevel3();
+    }
     private void Travel()
     {
         //elapsedTime += Time.deltaTime;
