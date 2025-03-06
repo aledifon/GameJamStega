@@ -7,8 +7,8 @@ public class TableMovement : MonoBehaviour
     private Rigidbody rb;
 
     // Movement vectors
-    private float horizontal;
-    private float vertical;
+    //private float horizontal;
+    //private float vertical;
     private float xMouse;
     private float yMouse;
     [SerializeField] private float accelerationSpeed;
@@ -46,6 +46,7 @@ public class TableMovement : MonoBehaviour
     void Update()
     {        
         InputPlayer();
+        //BrakingDetection();
         //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z);                
 
         //Debug.Log("Mouse Y = " + yMouse);
@@ -73,17 +74,17 @@ public class TableMovement : MonoBehaviour
         desiredXRotation = Mathf.Clamp(desiredXRotation, bottomAngle, topAngle);
         desiredZRotation = Mathf.Clamp(desiredZRotation, -leftAngle, -rightAngle);
     }
-    private void Movement()
-    {
-        Vector3 torqueApplied = new Vector3(vertical, 0, -horizontal) * accelerationSpeed;
-        rb.AddTorque(torqueApplied, ForceMode.Impulse);
+    //private void Movement()
+    //{
+    //    Vector3 torqueApplied = new Vector3(vertical, 0, -horizontal) * accelerationSpeed;
+    //    rb.AddTorque(torqueApplied, ForceMode.Impulse);
 
-        //Vector3 torqueApplied = new Vector3(yMouse, 0, -xMouse) * accelerationSpeed;
-        //rb.AddTorque(torqueApplied, ForceMode.Impulse);
+    //    //Vector3 torqueApplied = new Vector3(yMouse, 0, -xMouse) * accelerationSpeed;
+    //    //rb.AddTorque(torqueApplied, ForceMode.Impulse);
 
-        rb.constraints = rbConstraints;
-        Debug.Log(torqueApplied);
-    }
+    //    rb.constraints = rbConstraints;
+    //    Debug.Log(torqueApplied);
+    //}
     private void ApplyRotation()
     {
         // Calculate the table rotation to apply around the X-Axis
@@ -114,5 +115,5 @@ public class TableMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-    }
+    }    
 }

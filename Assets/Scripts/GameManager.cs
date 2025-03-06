@@ -353,25 +353,25 @@ public class GameManager : MonoBehaviour
     }    
     public void PlayMainTitleAudioClip()
     {
-        audioSource.volume = 0.5f;
+        audioSource.volume = 0.4f;
         audioSource.loop = true;
         PlayAudioClip(mainTitleAudioclip);
     }
     public void PlayLevelPassedAudioClip()
     {
-        audioSource.volume = 0.7f;
+        audioSource.volume = 0.4f;
         audioSource.loop = false;
         PlayAudioClip(levelPassedAudioclip);
     }
     public void PlayWinAudioClip()
     {
-        audioSource.volume = 0.7f;
+        audioSource.volume = 0.4f;
         audioSource.loop = false;
         PlayAudioClip(winAudioclip);
     }
     public void PlayLooseAudioClip()
     {
-        audioSource.volume = 0.7f;
+        audioSource.volume = 0.4f;
         audioSource.loop = false;
         PlayAudioClip(looseAudioclip);
     }
