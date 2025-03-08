@@ -380,15 +380,15 @@ public class GameManager : MonoBehaviour
         //panelSelected = PanelSelected.Menu;
     }
     public void OnStartGameClick()
-    {        
-        if (debugLevel2)
-            SceneManager.LoadScene(Scenes.Level2.ToString());         // ONLY FOR TEST!!! REMEMBER TO DELETE WHEN FINISH LEVEL2!!
-        else
-        {
+    {
+        //if (debugLevel2)
+        //    SceneManager.LoadScene(Scenes.Level2.ToString());         // ONLY FOR TEST!!! REMEMBER TO DELETE WHEN FINISH LEVEL2!!
+        //else
+        //{
             // Load the Level 1 Scene
             SceneManager.LoadScene(Scenes.Level1.ToString());         // ONLY FOR TEST!!! REMEMBER TO LEAVE ONLY THIS OPTION
                                                                       // WHEN FINISH LEVEL2!!
-        }
+        //}
     }    
 
     #region AudioMenuMethods

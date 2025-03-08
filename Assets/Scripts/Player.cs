@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     //private Vector3 lastPlayerDirection;
     //private float lastPlayerMagnitude;
-    float lastAngVelocityZ = 0f;
+    //float lastAngVelocityZ = 0f;
     //[SerializeField] private float playerBrakeThreshold;
     //[SerializeField] private bool isbraking;
     bool directionChangedZ;

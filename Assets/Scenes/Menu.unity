@@ -3471,7 +3471,7 @@ MonoBehaviour:
   gameAudioclip: {fileID: 8300000, guid: 5b3349bc739b35e4a876826ecb0e4fb3, type: 3}
   mainTitleAudioclip: {fileID: 8300000, guid: 73bde2a40eb480e45985f3f5cf191092, type: 3}
   levelPassedAudioclip: {fileID: 8300000, guid: ff2c640850e7fb7458f2be7ac29d98ff, type: 3}
-  winAudioclip: {fileID: 8300000, guid: 0f4f1cb34422f3146ae4f74c299c62ec, type: 3}
+  winAudioclip: {fileID: 8300000, guid: 4097959b37584a8409baee3b721a9fab, type: 3}
   looseAudioclip: {fileID: 8300000, guid: c10712e42062b0f488a996d090f2a141, type: 3}
   playerRbLevel1DefAngularDrag: 0.8
   playerRbLevel2DefAngularDrag: 0.2

@@ -31,13 +31,14 @@ public class Platform : MonoBehaviour
         float t = Mathf.PingPong(Time.time * travelSpeed, pinpongLength)/pinpongLength;
 
         // Continuous update of the next Local Position (in func. of time)
-        Vector3 nextLocalPos = Vector3.Lerp(startPos.localPosition,endPos.localPosition,t);
+        Vector3 nextLocalPos = Vector3.Lerp(startPos.localPosition, endPos.localPosition, t);
 
         // Apply the Movement to the Rb's platform
         rb.MovePosition(transform.parent.TransformPoint(nextLocalPos));
 
         // Sync the platform's rotation whith its parent(Level) rotation
-        transform.rotation = transform.parent.rotation;
+        //transform.rotation = transform.parent.rotation;
+        rb.MoveRotation(transform.parent.rotation);
     }
     private void OnCollisionEnter(Collision collision)
     {

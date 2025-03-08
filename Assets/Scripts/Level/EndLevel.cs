@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+//using UnityEditor.SearchService; 
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,7 +14,7 @@ public class EndLevel : MonoBehaviour
     //float elapsedTime;
     //Vector3 targetIndicatorPos;
 
-    float newIndicatorScale = 0f;
+    //float newIndicatorScale = 0f;
     float newIndicatorYPos = 0f;
 
     [SerializeField] Rigidbody ballRb;
@@ -48,16 +48,17 @@ public class EndLevel : MonoBehaviour
                 // Load Level 2 after elapsed a certain time
                 StartCoroutine(LoadLevel2AfterDelay(2f));
             }                
+            //else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level2.ToString())
+            //{
+            //    // Load Level Passed Panel
+            //    GameManager.Gm.SetLevelPassedPanel(true);
+            //    // Load LevelPassed Music?
+            //    GameManager.Gm.PlayLevelPassedAudioClip();
+            //    // Load Level 3 after elapsed a certain time
+            //    StartCoroutine(LoadLevel3AfterDelay(2f));
+            //}
+            //else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level3.ToString())
             else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level2.ToString())
-            {
-                // Load Level Passed Panel
-                GameManager.Gm.SetLevelPassedPanel(true);
-                // Load LevelPassed Music?
-                GameManager.Gm.PlayLevelPassedAudioClip();
-                // Load Level 3 after elapsed a certain time
-                StartCoroutine(LoadLevel3AfterDelay(2f));
-            }                
-            else if (SceneManager.GetActiveScene().name == GameManager.Scenes.Level3.ToString())
             {
                 // Load Win Panel
                 GameManager.Gm.SetWinPanel(true);

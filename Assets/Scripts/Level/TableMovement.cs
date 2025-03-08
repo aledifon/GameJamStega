@@ -13,8 +13,8 @@ public class TableMovement : MonoBehaviour
     private float yMouse;
     [SerializeField] private float accelerationSpeed;
 
-    private RigidbodyConstraints rbConstraints = RigidbodyConstraints.FreezePosition | 
-                                                RigidbodyConstraints.FreezeRotationY;
+    //private RigidbodyConstraints rbConstraints = RigidbodyConstraints.FreezePosition | 
+    //                                            RigidbodyConstraints.FreezeRotationY;
 
     [Header("Mouse Settings")]
     [SerializeField] float mouseSensitivity;
