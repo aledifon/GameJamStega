@@ -76,6 +76,8 @@ public class EndLevel : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
 
+        // Reset the Player Starting Pos.
+        GameManager.Gm.SetCheckPoint(false);
         //SceneManager.LoadScene(GameManager.Scenes.Level2.ToString());
         GameManager.Gm.LoadLevel2();
     }
@@ -83,6 +85,8 @@ public class EndLevel : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
 
+        // Reset the Player Starting Pos.
+        GameManager.Gm.SetCheckPoint(false);
         //SceneManager.LoadScene(GameManager.Scenes.Level3.ToString());
         GameManager.Gm.LoadLevel3();
     }
@@ -97,14 +101,16 @@ public class EndLevel : MonoBehaviour
         //}
 
         newIndicatorYPos = Mathf.PingPong(Time.time * 2f, 2);
-        newIndicatorScale = Mathf.PingPong(Time.time, 1f);
+        //newIndicatorScale = Mathf.PingPong(Time.time, 2f);
 
         indicatorTransform.position = new Vector3(transform.position.x,
-                                                transform.position.y + newIndicatorYPos,
+                                                transform.position.y + newIndicatorYPos+0.6f,
                                                 transform.position.z);
 
-        indicatorTransform.localScale = new Vector3(newIndicatorScale+0.2f, 
-                                                    newIndicatorScale+0.2f, 
-                                                    newIndicatorScale+0.2f);
+        //indicatorTransform.localScale = new Vector3(indicatorTransform.localScale.x, 
+        //                                            newIndicatorScale+1f, 
+        //                                            newIndicatorScale+1f);
+
+        indicatorTransform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
     }
 }

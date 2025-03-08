@@ -22,12 +22,24 @@ public class Player : MonoBehaviour
     bool directionChangedZ;
     bool significantChangeZ;
 
+    [SerializeField] private Transform startPos;
+    [SerializeField] private Transform checkPointPos;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
 
         //lastPlayerDirection = rb.velocity.normalized;
+    }
+
+    private void Start()
+    {
+        // Set the corresponding Player Pos. in func. of CheckPoint Reached or not
+        if (GameManager.Gm.IsReachedCheckPoint)
+            SetCheckPointPos();
+        else
+            SetStartPos();
     }
 
     void Update()
@@ -153,4 +165,13 @@ public class Player : MonoBehaviour
             audioSource.Stop();
     }
     #endregion
+
+    public void SetStartPos()
+    {
+        rb.position = startPos.position;
+    }
+    public void SetCheckPointPos()
+    {
+        rb.position = checkPointPos.position;
+    }
 }

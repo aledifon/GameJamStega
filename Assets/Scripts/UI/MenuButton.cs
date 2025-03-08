@@ -41,12 +41,19 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 // Asignar el método de GameManager al botón
                 button.onClick.AddListener(GameManager.Gm.OnQuitGame);
             }
-            else if (gameObject.name == "ReplayButton")
+            else if (gameObject.name == "RetryButton")
             {
                 // Limpiar eventos previos para evitar duplicados
                 button.onClick.RemoveAllListeners();
                 // Asignar el método de GameManager al botón
-                button.onClick.AddListener(GameManager.Gm.ReplayGame);
+                button.onClick.AddListener(GameManager.Gm.RestartLevel);
+            }
+            else if (gameObject.name == "RestartButton")
+            {
+                // Limpiar eventos previos para evitar duplicados
+                button.onClick.RemoveAllListeners();
+                // Asignar el método de GameManager al botón
+                button.onClick.AddListener(GameManager.Gm.RestartFromLevel1);
             }
             else if (gameObject.name == "ReturnToMenuButton")
             {

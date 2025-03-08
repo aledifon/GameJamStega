@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Audio")]
     [SerializeField] private AudioClip gameAudioclip;
     [SerializeField] private AudioClip mainTitleAudioclip;
-    [SerializeField] private AudioClip levelPassedAudioclip;
+    [SerializeField] private AudioClip levelPassedAudioclip;    
     [SerializeField] private AudioClip winAudioclip;
     [SerializeField] private AudioClip looseAudioclip;
 
@@ -74,6 +74,8 @@ public class GameManager : MonoBehaviour
     public bool IsLevelPassedEnabled { get; private set; } = false;
     public bool IsWinPanelEnabled { get; private set; } = false;
     public bool IsLoosePanelEnabled { get; private set; } = false;
+
+    public bool IsReachedCheckPoint { get; private set; } = false;
 
     #region Enums
     public enum Scenes {Menu, Level1, Level2, Level3}
@@ -114,7 +116,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Only Enable when the current Scene is not the Menu Scene
-        if (sceneSelected != Scenes.Menu && 
+        if (/*sceneSelected != Scenes.Menu && */
             (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)))
         {
             TooglePause();
@@ -164,6 +166,10 @@ public class GameManager : MonoBehaviour
                     if (menuPanelOptionsButton == null)
                         Debug.LogError("The Menu Panel Options Button object is null");
 
+                    pausePanel = Canvas.transform.Find("PausePanel")?.gameObject;
+                    if (pausePanel == null)
+                        Debug.LogError("The Pause Panel object is null");
+
                     // Start playing Title Screen Audio
                     PlayMainTitleAudioClip();
 
@@ -211,6 +217,12 @@ public class GameManager : MonoBehaviour
                     SetLoosePanel(false);
                     SetLevelPassedPanel(false);
 
+                    //// Set the corresponding Player Pos. in func. of CheckPoint Reached or not
+                    //if (IsReachedCheckPoint)                                       
+                    //    GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().SetCheckPointPos();
+                    //else
+                    //    GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().SetStartPos();
+
                     // Lock the Mouse Cursor
                     ShowMouseCursor(false);
                     break;                    
@@ -226,7 +238,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;                // Stops the game (stop the physics and pending updates which are time dependent)
             audioSource.Pause();
             pausePanel.SetActive(true);
-            ShowMouseCursor(true);
+            if (sceneSelected != Scenes.Menu)
+                ShowMouseCursor(true);
             // Update the Panel Selected State
             //panelSelected = PanelSelected.Pause;
         }
@@ -235,7 +248,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;                // Resumes the game
             audioSource.Play();
             pausePanel.SetActive(false);
-            ShowMouseCursor(false);
+            if (sceneSelected != Scenes.Menu)
+                ShowMouseCursor(false);
             //panelSelected = PanelSelected.Game;     // As the Pause can be launch from any Panel this could be wrong (NEEDED TO UPDATE!)
         }
     }
@@ -250,15 +264,39 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Public Methods
-    // Restart the Game from Level 1
-    public void ReplayGame()
+    public void SetCheckPoint(bool enable)
     {
+        IsReachedCheckPoint = enable;
+    }
+    // Restart the Game from the 1st Level again
+    public void RestartFromLevel1()
+    {
+        // Reset the Player Starting Pos.
+        SetCheckPoint(false);        
         OnStartGameClick();
+    }
+    // Restart the Game from the 
+    public void RestartLevel()
+    {        
+        // Load again the corresponding Schen where we currently are
+        if (SceneManager.GetActiveScene().name == Scenes.Level1.ToString())        
+            LoadLevel1();
+        else if (SceneManager.GetActiveScene().name == Scenes.Level2.ToString())
+            LoadLevel2();
+        else if (SceneManager.GetActiveScene().name == Scenes.Level3.ToString())
+            LoadLevel3();
     }
     public void ReturnToMenu()
     {
+        // Reset the Player Starting Pos.
+        SetCheckPoint(false);
         // Return to the Menu Scene
         SceneManager.LoadScene(Scenes.Menu.ToString());
+    }
+    public void LoadLevel1()
+    {
+        // Return to the Level2 Scene
+        SceneManager.LoadScene(Scenes.Level1.ToString());
     }
     public void LoadLevel2()
     {
@@ -362,7 +400,7 @@ public class GameManager : MonoBehaviour
         audioSource.volume = 0.4f;
         audioSource.loop = false;
         PlayAudioClip(levelPassedAudioclip);
-    }
+    }    
     public void PlayWinAudioClip()
     {
         audioSource.volume = 0.4f;

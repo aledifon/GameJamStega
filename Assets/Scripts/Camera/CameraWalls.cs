@@ -57,7 +57,7 @@ public class CameraWalls : MonoBehaviour
             {                
                 WallTransparency wall = hit.collider.GetComponent<WallTransparency>();
 
-                Debug.Log("I'm hitting the Wall " + wall.gameObject);
+                //Debug.Log("I'm hitting the Wall " + wall.gameObject);
 
                 // If a new wall is detected
                 if (wall != null && wall != lastDetectedWall)
