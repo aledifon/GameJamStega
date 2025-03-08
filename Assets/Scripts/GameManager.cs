@@ -82,6 +82,13 @@ public class GameManager : MonoBehaviour
     private Scenes sceneSelected = Scenes.Menu;
     #endregion
 
+    [SerializeField] public float playerRbLevel1DefAngularDrag;   // 0.8f
+    [SerializeField] public float playerRbLevel2DefAngularDrag;   // <0.8f
+    [SerializeField] public float playerRbLevel3DefAngularDrag;   // <0.8f
+    [SerializeField] public float playerRbPlatformAngularDrag;    // 100f
+
+    [SerializeField] public bool debugLevel2;
+
     #endregion
 
     #region Unity_API
@@ -374,8 +381,14 @@ public class GameManager : MonoBehaviour
     }
     public void OnStartGameClick()
     {        
-        // Load the Level 1 Scene
-        SceneManager.LoadScene(Scenes.Level1.ToString());
+        if (debugLevel2)
+            SceneManager.LoadScene(Scenes.Level2.ToString());         // ONLY FOR TEST!!! REMEMBER TO DELETE WHEN FINISH LEVEL2!!
+        else
+        {
+            // Load the Level 1 Scene
+            SceneManager.LoadScene(Scenes.Level1.ToString());         // ONLY FOR TEST!!! REMEMBER TO LEAVE ONLY THIS OPTION
+                                                                      // WHEN FINISH LEVEL2!!
+        }
     }    
 
     #region AudioMenuMethods

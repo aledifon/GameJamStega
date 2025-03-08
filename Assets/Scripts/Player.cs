@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static GameManager;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -23,7 +25,11 @@ public class Player : MonoBehaviour
     bool significantChangeZ;
 
     [SerializeField] private Transform startPos;
-    [SerializeField] private Transform checkPointPos;
+    [SerializeField] private Transform checkPointPos;    
+
+    private float rbDefAngularDrag;
+
+    //public bool IsOnPlatform { get; private set; }
 
     private void Awake()
     {
@@ -31,6 +37,15 @@ public class Player : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         //lastPlayerDirection = rb.velocity.normalized;
+        //
+
+        // Set the corresponding Default Player RB Angular Drag
+        if (SceneManager.GetActiveScene().name == Scenes.Level1.ToString())
+            SetLevel1DefaultAngularDrag();
+        if (SceneManager.GetActiveScene().name == Scenes.Level2.ToString())
+            SetLevel2DefaultAngularDrag();
+        if (SceneManager.GetActiveScene().name == Scenes.Level3.ToString())
+            SetLevel3DefaultAngularDrag();
     }
 
     private void Start()
@@ -173,5 +188,31 @@ public class Player : MonoBehaviour
     public void SetCheckPointPos()
     {
         rb.position = checkPointPos.position;
+    }
+
+    //public void SetIsOnPlatform(bool enable)
+    //{
+    //    IsOnPlatform = enable;
+    //}
+
+    public void SetRbPlatformAngularDrag()
+    {
+        rb.angularDrag = GameManager.Gm.playerRbPlatformAngularDrag;
+    }
+    public void ResetRbAngularDrag()
+    {
+        rb.angularDrag = rbDefAngularDrag;
+    }
+    private void SetLevel1DefaultAngularDrag()
+    {
+        rbDefAngularDrag = GameManager.Gm.playerRbLevel1DefAngularDrag;
+    }
+    private void SetLevel2DefaultAngularDrag()
+    {
+        rbDefAngularDrag = GameManager.Gm.playerRbLevel2DefAngularDrag;
+    }
+    private void SetLevel3DefaultAngularDrag()
+    {
+        rbDefAngularDrag = GameManager.Gm.playerRbLevel3DefAngularDrag;
     }
 }

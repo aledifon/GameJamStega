@@ -19767,6 +19767,10 @@ MonoBehaviour:
   brakingAudioClip: {fileID: 8300000, guid: e6af1e37951c2b749b3344e0b5515792, type: 3}
   startPos: {fileID: 1623379902}
   checkPointPos: {fileID: 895568154}
+  rbLevel1DefAngularDrag: 0.8
+  rbLevel2DefAngularDrag: 0.8
+  rbLevel3DefAngularDrag: 0.8
+  rbPlatformAngularDrag: 100
 --- !u!1 &749489854
 GameObject:
   m_ObjectHideFlags: 0

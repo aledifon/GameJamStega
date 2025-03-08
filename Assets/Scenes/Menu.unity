@@ -3473,6 +3473,11 @@ MonoBehaviour:
   levelPassedAudioclip: {fileID: 8300000, guid: ff2c640850e7fb7458f2be7ac29d98ff, type: 3}
   winAudioclip: {fileID: 8300000, guid: 0f4f1cb34422f3146ae4f74c299c62ec, type: 3}
   looseAudioclip: {fileID: 8300000, guid: c10712e42062b0f488a996d090f2a141, type: 3}
+  playerRbLevel1DefAngularDrag: 0.8
+  playerRbLevel2DefAngularDrag: 0.2
+  playerRbLevel3DefAngularDrag: 0.8
+  playerRbPlatformAngularDrag: 100
+  debugLevel2: 1
 --- !u!82 &1636870522
 AudioSource:
   m_ObjectHideFlags: 0
