@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
     private GameObject titlePanel;
     private GameObject menuPanel;
     private GameObject optionsPanel;
+    private GameObject infoTextOptionsPanel;
+    private Image imageOptionsPanel;
+    private Color newColorImageOptionsPanel;
     private GameObject pausePanel;
     private GameObject winPanel;
     private GameObject loosePanel;
@@ -160,6 +164,17 @@ public class GameManager : MonoBehaviour
                     optionsPanel = Canvas.transform.Find("OptionsPanel")?.gameObject;
                     if (optionsPanel == null)
                         Debug.LogError("The options Panel object is null");
+                    else
+                    {
+                        // Get the Info Text GO from Options Panel                        
+                        infoTextOptionsPanel = optionsPanel.transform.Find("InfoText").gameObject;
+                        if (infoTextOptionsPanel == null)
+                            Debug.LogError("InfoText from OptionsPanel is null");
+                        // Get the Image Component from Options Panel                        
+                        imageOptionsPanel = optionsPanel.GetComponent<Image>();
+                        if (imageOptionsPanel == null)
+                            Debug.LogError("Image Component from OptionsPanel is null");
+                    }
 
                     menuPanel = Canvas.transform.Find("MenuPanel")?.gameObject;
                     if (menuPanel == null)
@@ -380,16 +395,36 @@ public class GameManager : MonoBehaviour
         //panelSelected = PanelSelected.Menu;
     }
     public void OnStartGameClick()
+    {               
+        // Enable the Options Panel, Disable the Info Text
+        optionsPanel.SetActive(true);
+        infoTextOptionsPanel.SetActive(false);
+        // Set Alpha channel of the Image Options Panel to Max value.
+        newColorImageOptionsPanel = imageOptionsPanel.color;
+        newColorImageOptionsPanel.a = 1f;
+        imageOptionsPanel.color = newColorImageOptionsPanel;
+
+        StartCoroutine(nameof(StartGameAfterDelay));
+    }    
+    private IEnumerator StartGameAfterDelay()
     {
+        yield return new WaitForSeconds(3f);
+       
+        // Reenable again the Info Text & Disable the Control Panel
+        infoTextOptionsPanel.SetActive(true);
+        optionsPanel.SetActive(false);
+        // Set the Alpha channel to its def. value
+        newColorImageOptionsPanel.a = 0.5f;
+        imageOptionsPanel.color = newColorImageOptionsPanel;
+
         //if (debugLevel2)
-        //    SceneManager.LoadScene(Scenes.Level2.ToString());         // ONLY FOR TEST!!! REMEMBER TO DELETE WHEN FINISH LEVEL2!!
+        //    SceneManager.LoadScene(Scenes.Level2.ToString());       
         //else
         //{
-            // Load the Level 1 Scene
-            SceneManager.LoadScene(Scenes.Level1.ToString());         // ONLY FOR TEST!!! REMEMBER TO LEAVE ONLY THIS OPTION
-                                                                      // WHEN FINISH LEVEL2!!
+        // Load the Level 1 Scene
+        SceneManager.LoadScene(Scenes.Level1.ToString());
         //}
-    }    
+    }
 
     #region AudioMenuMethods
     public void StopAudioSourceClip()
