@@ -4044,7 +4044,7 @@ MonoBehaviour:
   playerRbLevel1DefAngularDrag: 0.8
   playerRbLevel2DefAngularDrag: 0.2
   playerRbLevel3DefAngularDrag: 0.8
-  playerRbPlatformAngularDrag: 100
+  playerRbPlatformAngularDrag: 10
   debugLevel2: 1
 --- !u!82 &1636870522
 AudioSource:
