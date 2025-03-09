@@ -395,16 +395,21 @@ public class GameManager : MonoBehaviour
         //panelSelected = PanelSelected.Menu;
     }
     public void OnStartGameClick()
-    {               
-        // Enable the Options Panel, Disable the Info Text
-        optionsPanel.SetActive(true);
-        infoTextOptionsPanel.SetActive(false);
-        // Set Alpha channel of the Image Options Panel to Max value.
-        newColorImageOptionsPanel = imageOptionsPanel.color;
-        newColorImageOptionsPanel.a = 1f;
-        imageOptionsPanel.color = newColorImageOptionsPanel;
+    {
+        if (SceneManager.GetActiveScene().name == Scenes.Menu.ToString())
+        {
+            // Enable the Options Panel, Disable the Info Text
+            optionsPanel.SetActive(true);
+            infoTextOptionsPanel.SetActive(false);
+            // Set Alpha channel of the Image Options Panel to Max value.
+            newColorImageOptionsPanel = imageOptionsPanel.color;
+            newColorImageOptionsPanel.a = 1f;
+            imageOptionsPanel.color = newColorImageOptionsPanel;
 
-        StartCoroutine(nameof(StartGameAfterDelay));
+            StartCoroutine(nameof(StartGameAfterDelay));
+        }
+        else
+            SceneManager.LoadScene(Scenes.Level1.ToString());
     }    
     private IEnumerator StartGameAfterDelay()
     {
